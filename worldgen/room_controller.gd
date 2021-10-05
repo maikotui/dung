@@ -1,29 +1,29 @@
 class_name Room
-extends Node2D
+extends Area2D
 
 export var color: Color = Color.white
-export var rng_mean: float = 500.0
-export var rng_deviation: float = 250.0
+var rng_mean: float = 700.0
+var rng_deviation: float = 300.0
+
 var height 
 var width
-var rng = RandomNumberGenerator.new()
+
+var _rng = RandomNumberGenerator.new()
+var _rect;
 
 
 func _ready():
-	rng.randomize()
-	height = rng.randfn(rng_mean, rng_deviation);
-	width = rng.randfn(rng_mean, rng_deviation);
-
-	print_debug(str("initialized room (",height,"x",width,")"));
-
+	_rng.randomize()
+	height = _rng.randfn(rng_mean, rng_deviation);
+	width = _rng.randfn(rng_mean, rng_deviation);
+	
+	var shape = RectangleShape2D.new()
+	shape.extents = Vector2(width/2, height/2);
+	
+	$CollisionShape2D.shape = shape;
+	
+	_rect = Rect2(-shape.extents.x, -shape.extents.y, 2*shape.extents.x, 2*shape.extents.y)
+	
 
 func _draw():
-	var points = PoolVector2Array()
-	var colors = PoolColorArray([color])
-
-	points.push_back(Vector2(width/2, height/2))
-	points.push_back(Vector2(-width/2, height/2))
-	points.push_back(Vector2(-width/2, -height/2))
-	points.push_back(Vector2(width/2, -height/2))
-
-	draw_polygon(points, colors)
+	draw_rect(_rect, color);
