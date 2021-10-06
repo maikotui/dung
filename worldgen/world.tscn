@@ -1,6 +1,25 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://worldgen/world_generator.gd" type="Script" id=1]
+[ext_resource path="res://worldgen/room_scene_data.gd" type="Script" id=2]
+[ext_resource path="res://worldgen/room.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+room_resource = ExtResource( 3 )
+weight = 10
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
+room_prefabs = [ SubResource( 1 ) ]
+init_room_radius = 5000.0
+
+[node name="TempCam" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 20, 20 )
+
+[node name="NormalCamRef" type="Polygon2D" parent="."]
+position = Vector2( 507.804, 296.377 )
+z_index = 1
+color = Color( 1, 0, 0, 1 )
+polygon = PoolVector2Array( -509.97, -292.492, 515.078, -294.38, 518.854, 304.037, -509.97, 305.924 )

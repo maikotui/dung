@@ -9,19 +9,29 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
+"base": "Area2D",
 "class": "Room",
 "language": "GDScript",
 "path": "res://worldgen/room_controller.gd"
+}, {
+"base": "Resource",
+"class": "RoomSceneData",
+"language": "GDScript",
+"path": "res://worldgen/room_scene_data.gd"
 } ]
 _global_script_class_icons={
-"Room": ""
+"Room": "",
+"RoomSceneData": ""
 }
 
 [application]
 
 config/name="dung"
 config/icon="res://icon.png"
+
+[autoload]
+
+RNGManager="*res://global/rng_manager.gd"
 
 [physics]
 

@@ -1,23 +1,30 @@
 class_name Room
 extends Area2D
 
+onready var _rng = get_node("/root/RNGManager")
+
 export var color: Color = Color.white
-var rng_mean: float = 700.0
-var rng_deviation: float = 300.0
+export var min_width = 200.0
+export var min_height = 150.0
 
-var height 
-var width
+export var rng_mean: float = 800.0
+export var rng_deviation: float = 500
 
-var _rng = RandomNumberGenerator.new()
+var shape: RectangleShape2D
+
+var height = -1
+var width = -1
+
 var _rect;
 
 
 func _ready():
-	_rng.randomize()
-	height = _rng.randfn(rng_mean, rng_deviation);
-	width = _rng.randfn(rng_mean, rng_deviation);
-	
-	var shape = RectangleShape2D.new()
+	while height < min_width:
+		height = _rng.randfn(rng_mean, rng_deviation);
+	while width < min_height:
+		width = _rng.randfn(rng_mean, rng_deviation);
+
+	shape = RectangleShape2D.new()
 	shape.extents = Vector2(width/2, height/2);
 	
 	$CollisionShape2D.shape = shape;
@@ -27,3 +34,6 @@ func _ready():
 
 func _draw():
 	draw_rect(_rect, color);
+
+func _get_shape():
+	return $CollisionShape2D.shape;
