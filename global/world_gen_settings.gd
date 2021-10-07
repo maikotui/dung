@@ -10,4 +10,4 @@ func vector_world_to_grid(world_coordinates: Vector2) -> Vector2:
 	return grid_coordinates
 
 func float_world_to_grid(value: float) -> int:
-	return int(floor(value + grid_size - 1) / grid_size) * grid_size
+	return int(round(value / grid_size) * grid_size)

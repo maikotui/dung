@@ -15,10 +15,11 @@ room_prefabs = [ SubResource( 1 ) ]
 
 [node name="TempCam" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 20, 20 )
+zoom = Vector2( 10, 10 )
 
 [node name="NormalCamRef" type="Polygon2D" parent="."]
-position = Vector2( 507.804, 296.377 )
+position = Vector2( 3422.83, 1451.14 )
+scale = Vector2( 0.461166, 0.450113 )
 z_index = 1
 color = Color( 1, 0, 0, 1 )
 polygon = PoolVector2Array( -509.97, -292.492, 515.078, -294.38, 518.854, 304.037, -509.97, 305.924 )

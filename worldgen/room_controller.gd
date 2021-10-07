@@ -39,6 +39,7 @@ func _ready():
 	# Create the collision shape based on this size
 	var shape = RectangleShape2D.new()
 	shape.extents = size
+	shape.custom_solver_bias = 0.75
 	$CollisionShape2D.shape = shape
 	
 	# Create the drawable rectangle based on the size
@@ -48,6 +49,11 @@ func _ready():
 # Called almost every frame
 func _process(delta):
 	update() # Redraws the shape
+
+
+# Called during physics updates
+func _integrate_forces(state):
+	position = _settings.vector_world_to_grid(position) # Round position
 
 
 # Redraws the rectangle

@@ -45,13 +45,13 @@ func _ready():
 	var room_graph = RoomGraph.new(main_rooms)
 	print_debug("found the largest rooms")
 	
-	yield(_separate_rooms(room_spread_speed), "completed")
-	print_debug("rooms spread successfully")
+#	yield(_separate_rooms(room_spread_speed), "completed")
+#	print_debug("rooms spread successfully")
+	yield(get_tree().create_timer(1.1), 'timeout')
 	
 	for room in main_rooms:
 		room = room as Room
-		room.color = Color(0, 1, 0)
-		room.update()
+		room.color = Color.green
 
 	var del_indexes = _construct_delaunay_graph(main_rooms)
 	info = str("constructed delaunay graph: ", del_indexes)
@@ -70,7 +70,7 @@ func _ready():
 				
 				var line = Line2D.new()
 				line.z_index = 1
-				line.width = 150
+				line.width = 25
 				line.default_color = Color(1,0,0)
 				line.add_point(Vector2(pp.x, pp.y))
 				line.add_point(Vector2(cp.x, cp.y))
@@ -126,20 +126,20 @@ func _get_random_point_in_circle(radius: float) -> Vector2:
 	return retval
 
 
-func _separate_rooms(speed: float):
-	var rooms = get_tree().get_nodes_in_group("rooms")
-	var none_are_touching = false
-	while not none_are_touching:
-		yield(get_tree(), "physics_frame")
-		none_are_touching = true
-
-		for room in rooms:
-			room = room as Room
-			var vel = _calculate_separation(room)
-			if vel != Vector2.ZERO:
-				none_are_touching = false
-				vel *= _settings.grid_size * speed
-				room.position += vel
+#func _separate_rooms(speed: float):
+#	var rooms = get_tree().get_nodes_in_group("rooms")
+#	var none_are_touching = false
+#	while not none_are_touching:
+#		yield(get_tree(), "physics_frame")
+#		none_are_touching = true
+#
+#		for room in rooms:
+#			room = room as Room
+#			var vel = _calculate_separation(room)
+#			if vel != Vector2.ZERO:
+#				none_are_touching = false
+#				vel *= _settings.grid_size * speed
+#				room.position += vel
 
 
 func _calculate_separation(room: Room):
@@ -164,7 +164,7 @@ func _find_largest_rooms(num_main_rooms) -> Array:
 	
 
 func _sort_by_area_descending(a: Room, b: Room):
-	if a.width * a.height > b.width * b.height:
+	if a.size.x * a.size.y > b.size.x * b.size.y:
 		return true
 	return false
 
@@ -184,7 +184,7 @@ func _construct_delaunay_graph(main_rooms: Array) -> PoolIntArray:
 			del_points.append(main_rooms[del_indexes[index * 3 + n]].position)
 	for index in len(del_points) / 3:
 		var line = Line2D.new()
-		line.width = 100
+		line.width = 20
 		line.default_color = Color(0,0,0)
 		
 		for n in 3:
